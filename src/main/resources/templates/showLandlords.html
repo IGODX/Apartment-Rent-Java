@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="section/head ::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="section/header ::header"></header>
+<main>
+    <div class="container">
+    <h2>Landlords</h2>
+        <form action="/add-user" method="get">
+            <input type="hidden" name="type" value="0">
+            <input type="submit" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-color="dark" value="Add new landlord"/>
+        </form>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Surname</th>
+            <th>Patronymic</th>
+            <th>Contact Phone</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="landlord : ${landlords}">
+            <td th:text="${landlord.id}"></td>
+            <td th:text="${landlord.user.firstname}"></td>
+            <td th:text="${landlord.user.surname}"></td>
+            <td th:text="${landlord.user.patronymic}"></td>
+            <td th:text="${landlord.user.telephoneNumber}"></td>
+            <td>
+            <td>
+            <div class="d-flex">
+                <form action="/edit-user" method="get">
+                    <input type="hidden" name="id" th:value="${landlord.user.id}">
+                    <input type="hidden" name="clientId" value="0">
+                    <input type="submit" class="btn btn-outline-warning btn-rounded" value="Edit">
+                </form>
+                <form action="/delete-landlord" method="post">
+                    <input type="hidden" name="id" th:value="${landlord.id}">
+                    <input type="submit" class="btn btn-outline-danger btn-rounded" value="Delete">
+                </form>
+            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</main>
+<th:block th:insert="section/footer ::footer"></th:block >
+</body>
+</html>

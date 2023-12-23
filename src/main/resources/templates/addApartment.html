@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="section/head ::head">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<header th:insert="section/header ::header"></header>
+<main>
+  <div class="container">
+    <h2>Add apartment</h2>
+    <div class="mb-3">
+      <form action="/add-apartment" method="post">
+        <div class="mb-4">
+          <label class="form-label" for="address">Address</label>
+          <input type="text" id="address" name="address" class="form-control" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="area">Area</label>
+          <input type="number" id="area" name="area" class="form-control" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="numRooms">Number of rooms</label>
+          <input type="number" id="numRooms" min="1" maxlength="10" name="numRooms" class="form-control" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="landlordId">Landlord</label>
+          <select class="form-control" id="landlordId" name="landlordId">
+            <option value="0">None</option>
+              <option th:each="landlord  : ${landlords }" th:value="${landlord.id}" th:text="${landlord}">
+
+              </option>
+          </select>
+        </div>
+        <input type="submit" class="btn btn-outline-primary btn-rounded" value="Add">
+      </form>
+    </div>
+  </div>
+</main>
+<th:block th:insert="section/footer ::footer"></th:block >
+</body>
+</html>

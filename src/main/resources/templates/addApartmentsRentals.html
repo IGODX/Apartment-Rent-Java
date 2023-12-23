@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="section/head ::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="section/header ::header"></header>
+<main>
+    <div class="container">
+        <h2>Add apartment rental</h2>
+        <div class="mb-3">
+            <form th:object="${apartmentsRentals}" action="/add-apartments-rentals" method="post">
+                <div class="mb-4">
+                    <label class="form-label" for="startDate">Start date</label>
+                    <input class="form-control" type="date" id="startDate" name="startDate">
+                    <div th:if="${#fields.hasErrors('startDate')}"style="color: red">
+                        <p th:errors="*{startDate}"></p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="endDate">End date</label>
+                    <input class="form-control" type="date" id="endDate" name="endDate">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="rentCost">Rental cost</label>
+                    <input type="text" id="rentCost" name="rentCost" class="form-control" />
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="apartment">Apartment</label>
+                    <select class="form-control" id="apartment" name="apartmentId">
+                        <option th:each="apartment : ${apartments}" th:value="${apartment.id}" th:text="${apartment.address}"></option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="client">Client</label>
+                    <select class="form-control" id="client" name="clientId">
+                        <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.user}"></option>
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-outline-primary btn-rounded" value="Add">
+            </form>
+        </div>
+    </div>
+</main>
+<th:block th:insert="section/footer ::footer"></th:block >
+</body>
+</html>

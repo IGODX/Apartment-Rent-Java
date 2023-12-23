@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="section/head ::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="section/header ::header"></header>
+<main>
+    <div class="container">
+        <h2>Clients</h2>
+        <div class="row">
+            <form action="/add-user" method="get">
+                <input type="hidden" name="type" value="1">
+                <input type="submit" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-color="dark" value="Add new client"/>
+            </form>
+
+            <form action="/clients" method="get">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="searchName">Search by name</label>
+                        <input type="search" id="searchName" name="searchName" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="searchTelephone">Search by telephone</label>
+                        <input type="search" id="searchTelephone" name="searchTelephone" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="searchRooms">Search by number of rooms</label>
+                        <input type="search" id="searchRooms" name="searchRooms" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="searchAddress">Search by address</label>
+                        <input type="search" id="searchAddress" name="searchAddress" class="form-control" />
+                    </div>
+                </div>
+
+                <input type="submit" value="Search" class="btn btn-outline-primary btn-rounded">
+            </form>
+        </div>
+
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Firstname</th>
+                <th>Surname</th>
+                <th>Patronymic</th>
+                <th>Contact Phone</th>
+                <th>Preference apartment</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.id}"></td>
+                <td th:text="${client.user.firstname}"></td>
+                <td th:text="${client.user.surname}"></td>
+                <td th:text="${client.user.patronymic}"></td>
+                <td th:text="${client.user.telephoneNumber}"></td>
+                <th:block th:if="${client.apartmentPreference != null}">
+                <td>
+                    <p th:text="'Address: ' + ${client.apartmentPreference.address}"></p>
+                    <p th:text="'Number of rooms: ' + ${client.apartmentPreference.numRooms}"></p>
+                    <p th:text="'Area: ' + ${client.apartmentPreference.area}"></p>
+                    <p th:text="'Rental cost: ' + ${client.apartmentPreference.rentCost}"></p>
+                </td>
+                </th:block>
+                <td>
+                <td>
+                    <div class="d-flex">
+                        <form action="/edit-user" method="get">
+                            <input type="hidden" name="id" th:value="${client.user.id}">
+                            <input type="hidden" name="clientId" th:value="${client.id}">
+                            <input type="submit" class="btn btn-outline-warning btn-rounded" value="Edit">
+                        </form>
+                        <form action="/delete-client" method="post">
+                            <input type="hidden" name="id" th:value="${client.id}">
+                            <input type="submit" class="btn btn-outline-danger btn-rounded" value="Delete">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<th:block th:insert="section/footer ::footer"></th:block >
+</body>
+</html>

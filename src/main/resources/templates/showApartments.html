@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="section/head ::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="section/header ::header"></header>
+<main>
+    <div class="container">
+        <h2>Apartments</h2>
+        <a class="btn btn-outline-primary btn-rounded" href="/add-apartment">Add apartment</a>
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Address</th>
+                <th>Number of rooms</th>
+                <th>Area</th>
+                <th>Landlord</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="apartment  : ${apartments }">
+                <td th:text="${apartment.id}"></td>
+                <td th:text="${apartment.address}"></td>
+                <td th:text="${apartment.numRooms}"></td>
+                <td th:text="${apartment.area}"></td>
+                <td th:text="${apartment.landlord}"></td>
+                <td>
+                    <div class="d-flex">
+                        <form action="/edit-apartment" method="get">
+                            <input type="hidden" name="id" th:value="${apartment.id}">
+                            <input type="submit" class="btn btn-outline-warning btn-rounded" value="Edit">
+                        </form>
+                        <form action="/delete-apartment" method="post">
+                            <input type="hidden" name="id" th:value="${apartment.id}">
+                            <input type="submit" class="btn btn-outline-danger btn-rounded" value="Delete">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<th:block th:insert="section/footer ::footer"></th:block >
+</body>
+</html>
